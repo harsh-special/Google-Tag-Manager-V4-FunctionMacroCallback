@@ -75,6 +75,9 @@ public class CuteActivity extends Activity {
             // Register two custom function call macros to the container.
             container.registerFunctionCallMacroCallback("increment", new CustomMacroCallback());
             container.registerFunctionCallMacroCallback("mod", new CustomMacroCallback());
+			
+			 //Register function call tag to the container
+            container.registerFunctionCallTagCallback("FunctionTagCall", new CustomTagCallback());
         }
     }
 
@@ -95,6 +98,8 @@ public class CuteActivity extends Activity {
             } else if ("increment".equals(functionName)) {
                 Log.e("CuteAnimals", parameters.toString());
 
+						Toast.makeText(CuteActivity.this, parameters.get("key").toString(), Toast.LENGTH_SHORT).show();
+                        txtTitle.setText(parameters.get("key").toString());
 
                         txtTitle.setText(parameters.get("key").toString());
 
@@ -104,6 +109,17 @@ public class CuteActivity extends Activity {
             }
 
 
+        }
+    }
+	
+	
+	 class CustomTagCallback implements Container.FunctionCallTagCallback {
+        @Override
+        public void execute(String tagName, Map<String, Object> parameters) {
+            // The code for firing this custom tag.
+            Log.e("CuteAnimals", "Custom function call tag :" + tagName + " is fired.");
+            Toast.makeText(CuteActivity.this, parameters.get("key").toString(), Toast.LENGTH_SHORT).show();
+            txtFunctionTag.setText(parameters.get("key").toString());
         }
     }
 
